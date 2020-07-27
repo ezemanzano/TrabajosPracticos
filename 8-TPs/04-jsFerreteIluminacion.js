@@ -8,69 +8,63 @@ E.	Si el importe final con descuento suma más de $120  se debe sumar un 10% de 
  ”Usted pago X de IIBB.”, siendo X el impuesto que se pagó. 
 
  */
-  function CalcularPrecio () 
-{
-    
-    
+function CalcularPrecio() {
+
+
     let vLamp;
     let vDesc;
-    let vPrecio;
+    let vPrecio = 35;
     let vPrecioDesc;
     let vFinal;
     let vFinalIB;
-    
-    vLamp = parseInt(document.getElementById("txtIdCantidad").value);
-    vPrecio = vLamp * 35;
+    vLamp = document.getElementById("txtIdCantidad").value;
+    parseInt(vLamp);
     vMarca = document.getElementById("Marca").value;
-    
-     if (vLamp >= 6)
-     {
-         vDesc = 0.5 ;
-     } 
-     else if (vLamp == 5 && vMarca == "ArgentinaLuz")
-     {
-         vDesc = 0.4
-         document.getElementById("txtIdprecioDescuento").value = vPrecio;
-     }
-     else if (vLamp == 5 && vMarca != "ArgentinaLuz")
-     {
-           vDesc = 0.3;
-     }
-     
-     else if (vLamp == 4 && (vMarca == "ArgentinaLuz" || vMarca == "FelipeLamparas") )
-     {  
-         vDesc = 0.25 ; 
-     }
-     else if (vLamp == 4 && vMarca != "ArgentinaLuz"  && vMarca != "Felipe Lamparas")    
-     {
-         vDesc = 0.20;
-         
-     }
+
+    switch (vLamp) {
        
-     else if (vLamp == 3 && vMarca == "ArgentinaLuz")
-     {
-         vDesc = 0.15;
-     }
-     else if (vLamp == 3 && vMarca == "FelipeLamparas")
-     {
-        vDesc = 0.10;
-     }
-     else if (vLamp == 3 && (vMarca != "ArgentinaLuz" || vMarca != "Felipe Lamparas")) 
-     {
-         vDesc = 0.05 ;
-     }
-       
-     vPrecioDesc = parseFloat (vPrecio - (vPrecio * vDesc)) ;
-     document.getElementById("txtIdprecioDescuento").value = vPrecioDesc ;
-     
-     if (vPrecioDesc >= 120 )
-     {
-        vFinal = vPrecioDesc;
-        vFinal = vFinal * 0.10;
-        vFinalIB = vFinal + vPrecioDesc;
-         alert("IIBB Usted pagó " + vFinal + "\n Precio Final " + vFinalIB )
-         document.getElementById("txtIdprecioDescuento").value = vFinalIB ;
-     }
-     
+        case '3':
+            if (vMarca == "ArgentinaLuz") {
+                vDesc = 0.85;
+            } else if (vMarca == "FelipeLamparas") {
+                vDesc = 0.90;
+            }
+            else {
+                vDesc = 0.95;
+            }
+            break;
+        case '4':
+            if ((vMarca == "ArgentinaLuz") || (vMarca == "FelipeLamparas")) {
+                vDesc = 0.75;
+            }
+            else {
+                vDesc = 0.80;
+            }
+            break;
+        case '5':
+            if (vMarca == "ArgentinaLuz") {
+                vDesc = 0.60
+            }
+            else if (vLamp == 5 && vMarca != "ArgentinaLuz") {
+                vDesc = 0.70;
+            }
+            break;
+        default:
+            vDesc = 0.50;
+
     }
-//
+    if (vLamp == 1 || vLamp == 2) {
+        document.getElementById("txtIdprecioDescuento").value = vLamp * vPrecio
+    } else {
+        vPrecioDesc = (vLamp * vPrecio) * vDesc;
+        document.getElementById("txtIdprecioDescuento").value = vPrecioDesc
+        if (vPrecioDesc >= 120) {
+            vFinal = vPrecioDesc;
+            vFinal = vFinal * 0.10;
+            vFinalIB = vFinal + vPrecioDesc;
+            alert("IIBB Usted pagó " + vFinal + "\n Precio Final " + vFinalIB)
+            document.getElementById("txtIdprecioDescuento").value = vFinalIB.toFixed(2);
+        }
+
+    }
+}
